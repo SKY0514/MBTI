@@ -1,7 +1,20 @@
 import axios from "axios";
 
-const getMbti = async () => {
-  return await axios.get("https://learn.codeit.kr/api/color-surveys?limit=40");
+
+const  baseURL = 'https://learn.codeit.kr/api/';
+
+
+const getMbti = async (params) => {
+  return await axios.get(`${baseURL}color-surveys/`,{
+    params
+  });
 };
 
-export { getMbti };
+const postMbti = async (params) => {
+  console.log(params);
+  return await axios.post(`${baseURL}color-surveys/`,
+    params
+  );
+};
+
+export { getMbti,postMbti };

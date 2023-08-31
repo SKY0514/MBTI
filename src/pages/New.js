@@ -1,16 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { useState } from "react";
 import MBTISelect from "../components/MBTISelect";
 import ColorInput from "../components/ColorInput";
 import Button from "../components/Button";
 import generateColorCode from "../lib/generateColorCode";
 import styles from "./New.module.css";
+import { postMbti } from "../api/api";
 
 function New() {
   const [formValue, setFormValue] = useState({
     mbti: "ESTJ",
     colorCode: "#000000",
   });
+  const navigate = useNavigate();
 
   function handleChange(name, value) {
     setFormValue((prevFormValue) => ({
@@ -30,10 +32,14 @@ function New() {
       handleChange("colorCode", "#000000");
     }
   }
-  function handleSubmit() {
-    /** @FIXME */
-    console.log(formValue);
+  async function handleSubmit() {
+    await postMbti({
+      ...formValue,
+      password: '0000',
+    });
+    navigate('/');
   }
+
 
   return (
     <div className={styles.container}>
@@ -63,7 +69,10 @@ function New() {
         </h2>
         <ColorInput
           value={formValue.colorCode}
-          onChange={(newColorCode) => handleChange("colorCode", newColorCode)}
+          onChange={(newColorCode) => handleChange("colorCode", newColorCode)
+        }
+        onBlur={handleColorCodeBlur}
+        
         />
       </section>
       <Button className={styles.submit} onClick={handleSubmit}>

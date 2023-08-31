@@ -9,7 +9,7 @@ function Home() {
   const [filter, setFilter] = useState(null);
 
   const getMbtiList = async () => {
-    const { data } = await getMbti();
+    const { data } = await getMbti({limit:20});
     setMbtiList(data.results);
   };
 
