@@ -1,21 +1,58 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getMbti } from "../api/api";
 import { Link } from "react-router-dom";
 import styles from "./Home.module.css";
 import ColorSurvey from "../components/ColorSurvey";
+import axios from "axios";
 
 function Home() {
   const [mbtiList, setMbtiList] = useState([]);
   const [filter, setFilter] = useState(null);
+  const nextPageRef = useRef(null);
+  const isLoadingRef = useRef(false);
 
-  const getMbtiList = async () => {
-    const { data } = await getMbti({limit:20});
+  const getMbtiList = async (mbti) => {
+    const { data } = await getMbti({mbti,limit:20});
+    nextPageRef.current = data.next;
+
     setMbtiList(data.results);
   };
 
+  async function handleLoadNext() {
+    
+
+    const { data } = await axios.get(nextPageRef.current);
+
+
+    setMbtiList((prevItems) => [...prevItems, ...data.results]);
+    nextPageRef.current = data.next;
+
+  };
+  
+
   useEffect(() => {
-    getMbtiList();
+    getMbtiList(filter);
+  }, [filter]);
+
+  useEffect(() => {
+    async function handleScroll() {
+      if (!nextPageRef.current || isLoadingRef.current) return;
+      isLoadingRef.current = true;
+
+      const maxScrollTop =
+        document.documentElement.offsetHeight - window.innerHeight - 100;
+
+      const currentScrollTop = document.documentElement.scrollTop;
+      if (currentScrollTop >= maxScrollTop) {
+
+        await handleLoadNext();
+      }
+      isLoadingRef.current = false;
+    }
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
 
   return (
     <div className={styles.container}>

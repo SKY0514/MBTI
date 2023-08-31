@@ -11,7 +11,6 @@ const getMbti = async (params) => {
 };
 
 const postMbti = async (params) => {
-  console.log(params);
   return await axios.post(`${baseURL}color-surveys/`,
     params
   );
