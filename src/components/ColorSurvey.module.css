@@ -58,3 +58,28 @@
   flex-shrink: 0;
   width: 105px;
 }
+
+@media screen and (max-width: 944px) {
+  .colorSurvey {
+    padding: 18px 16px;
+  }
+
+  .id {
+    width: 37px;
+    margin-right: 16px;
+  }
+
+  .mbti {
+    width: 54px;
+    margin-right: 16px;
+  }
+
+  .colorChip {
+    margin-right: 8px;
+    margin-left: 16px;
+  }
+
+  .colorCode {
+    width: 72px;
+  }
+}

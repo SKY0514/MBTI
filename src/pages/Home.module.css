@@ -67,3 +67,49 @@
   padding: 0;
   list-style: none;
 }
+
+
+@media screen and (max-width: 944px) {
+  .container {
+    display: block;
+    width: 100%;
+    position: relative;
+    z-index: 0;
+    margin: 0;
+    padding: 24px 16px;
+  }
+
+  .headerContainer {
+    position: sticky;
+    top: 24px;
+    z-index: 1;
+    margin-bottom: 24px;
+  }
+
+  .header {
+    position: static;
+    padding: 32px;
+    border-radius: 32px;
+    text-align: center;
+  }
+
+  .headerHeading {
+    margin-bottom: 16px;
+    font-size: 24px;
+    line-height: 29px;
+  }
+
+  .filter {
+    padding: 4px 8px;
+    gap: 8px;
+  }
+
+  .removeIcon {
+    width: 6px;
+    height: 6px;
+  }
+
+  .addItem {
+    padding: 20px 24px;
+  }
+}
